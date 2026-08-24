@@ -1,0 +1,10 @@
+@startuml
+actor Client
+boundary API
+database DB
+
+Client -> API : POST /login
+API -> DB : Verify Credentials
+DB --> API : User Record
+API --> Client : 200 OK (JWT Token)
+@enduml
