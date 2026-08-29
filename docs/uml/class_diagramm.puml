@@ -1,1 +1,53 @@
 
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class User {
+  - id: Long
+  - username: String
+  - email: String
+  - passwordHash: String
+  - createdAt: Date
+  + register(): Boolean
+  + login(): String
+  + updateProfile(): Void
+}
+
+class Role {
+  - id: Long
+  - name: String
+  + getPermissions(): List<String>
+}
+
+class Session {
+  - token: String
+  - expirationDate: Date
+  - ipAddress: String
+  + isValid(): Boolean
+  + invalidate(): Void
+}
+
+abstract class AuthProvider {
+  # providerName: String
+  + {abstract} authenticate(): Boolean
+}
+
+class LocalAuth {
+  + authenticate(): Boolean
+}
+
+class OAuth2Provider {
+  - clientId: String
+  - clientSecret: String
+  + authenticate(): Boolean
+}
+
+' Relations entre les classes
+User "1" -- "*" Session : détient >
+User "*" -- "*" Role : possède >
+AuthProvider <|-- LocalAuth
+AuthProvider <|-- OAuth2Provider
+User "1" --> "1" AuthProvider : utilise >
+
+@startuml
