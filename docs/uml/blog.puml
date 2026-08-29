@@ -2,6 +2,8 @@
 
 skinparam classAttributeIconSize 0
 
+' --- Classes existantes ---
+
 class Author {
   - id: Long
   - name: String
@@ -17,6 +19,7 @@ class Post {
   - isPublished: Boolean
   + publish(): Void
   + addComment(comment: Comment): Void
+  + addTag(tag: Tag): Void
 }
 
 class Category {
@@ -30,11 +33,42 @@ class Comment {
   - authorName: String
   - content: String
   - createdAt: Date
+  - isApproved: Boolean
   + approve(): Void
 }
+
+' --- Nouvelles classes ajoutées ---
+
+class Tag {
+  - id: Long
+  - label: String
+  - slug: String
+}
+
+class Like {
+  - id: Long
+  - createdAt: Date
+}
+
+class Moderator {
+  - id: Long
+  - username: String
+  - badgeNumber: String
+  + reviewComment(comment: Comment): Void
+  + deletePost(post: Post): Void
+}
+
+' --- Relations ---
 
 Author "1" -- "*" Post : rédige >
 Post "*" -- "*" Category : appartient à >
 Post "1" *-- "*" Comment : reçoit >
+
+' Nouveaux liens de relation
+Post "*" -- "*" Tag : possède >
+Post "1" *-- "*" Like : accumule >
+Author "1" -- "*" Like : attribue >
+Moderator "1" -- "*" Comment : modère >
+Moderator "1" -- "*" Post : surveille >
 
 @enduml
