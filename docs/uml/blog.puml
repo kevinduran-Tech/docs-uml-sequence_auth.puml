@@ -1,0 +1,40 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class Author {
+  - id: Long
+  - name: String
+  - bio: String
+  + createPost(title: String, content: String): Post
+}
+
+class Post {
+  - id: Long
+  - title: String
+  - content: String
+  - publishedAt: Date
+  - isPublished: Boolean
+  + publish(): Void
+  + addComment(comment: Comment): Void
+}
+
+class Category {
+  - id: Long
+  - name: String
+  - slug: String
+}
+
+class Comment {
+  - id: Long
+  - authorName: String
+  - content: String
+  - createdAt: Date
+  + approve(): Void
+}
+
+Author "1" -- "*" Post : rédige >
+Post "*" -- "*" Category : appartient à >
+Post "1" *-- "*" Comment : reçoit >
+
+@enduml
