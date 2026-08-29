@@ -1,0 +1,37 @@
+@startuml
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Visiteur" as guest
+actor "Auteur / Membre" as user
+actor "Modérateur" as admin
+
+' L'auteur hérite des droits du visiteur
+guest <|-- user
+
+rectangle "Système de Blog" {
+  
+  usecase "Consulter les articles" as UC_read
+  usecase "S'authentifier" as UC_auth
+  usecase "Rédiger un article" as UC_create_post
+  usecase "Commenter un article" as UC_comment
+  usecase "Liker un article" as UC_like
+  usecase "Modérer les commentaires" as UC_mod_comments
+  usecase "Supprimer un article" as UC_delete_post
+
+  ' Interactions Visiteur
+  guest --> UC_read
+  
+  ' Interactions Auteur
+  user --> UC_auth
+  user --> UC_create_post
+  user --> UC_comment
+  user --> UC_like
+  
+  ' Interactions Modérateur
+  admin --> UC_mod_comments
+  admin --> UC_delete_post
+}
+
+@enduml
