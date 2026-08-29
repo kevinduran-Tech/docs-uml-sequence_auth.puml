@@ -7,3 +7,6 @@
 
 ### 2. Diagramme de Classes (Blog & Modération)
 ![Diagramme de Classes](docs/uml/blog.svg)
+
+### 3. Diagramme de Cas d'Utilisation (Use Cases)
+![Diagramme de Cas d'Utilisation](docs/uml/use_cases.svg)
